@@ -1,14 +1,15 @@
-IF NOT EXISTS (SELECT name FROM sys.tables WHERE name = 'ShipToLocation')
-	CREATE TABLE [dbo].[ShipToLocation]
-	(
-		[CountryID] [int],
-		[CountryName] [varchar](100),
-		[CountryVAT] [decimal](5,2),
-		[EuroZone] [bit],
-		[Address] [varchar](100),
-		[state] [varchar](100),
-		[Zip] [varchar](100),
-		[LoadDate] Datetime
-	)
-ELSE 
-	TRUNCATE TABLE ShipToLocation
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'StgShipToLocation')
+BEGIN
+    CREATE TABLE dbo.StgShipToLocation
+    (
+        CountryID INT NOT NULL,
+        CountryName VARCHAR(100),
+        CountryVAT DECIMAL(5,2),
+        EuroZone BIT,
+        Address VARCHAR(200),
+        State VARCHAR(100),
+        Zip VARCHAR(20),
+        LoadDate DATETIME NOT NULL,
+        BatchID INT NOT NULL
+    );
+END;

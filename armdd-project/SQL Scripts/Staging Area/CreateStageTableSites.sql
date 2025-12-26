@@ -1,20 +1,22 @@
-IF NOT EXISTS (SELECT name FROM sys.tables WHERE name = 'Sites')
-	CREATE TABLE [dbo].[Sites]
-	(
-		[SiteID] [int],
-		[Name] [varchar](200),
-		[IsSite] [bit],
-		[SiteURL] [varchar](200),
-		[Initials] [varchar](10),
-		[StoreContact] [varchar](100),
-		[AddressLine1] [varchar](150),
-		[AddressLine2] [varchar](150),
-		[Zip_City] [varchar](100),
-		[CountryID] [int],
-		[Phone] [varchar](20),
-		[PickupHour] [varchar](20),
-		[DailyPickup] [bit],
-		[TimeZone] [varchar](30)
-	)
-ELSE 
-	TRUNCATE TABLE Sites
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'StgSites')
+BEGIN
+    CREATE TABLE dbo.StgSites
+    (
+        SiteID INT NOT NULL,
+        Name VARCHAR(200),
+        IsSite BIT,
+        SiteURL VARCHAR(200),
+        Initials VARCHAR(10),
+        StoreContact VARCHAR(100),
+        AddressLine1 VARCHAR(150),
+        AddressLine2 VARCHAR(150),
+        Zip_City VARCHAR(100),
+        CountryID INT,
+        Phone VARCHAR(20),
+        PickupHour VARCHAR(20),
+        DailyPickup BIT,
+        TimeZone VARCHAR(30),
+        LoadDate DATETIME NOT NULL,
+        BatchID INT NOT NULL
+    );
+END;

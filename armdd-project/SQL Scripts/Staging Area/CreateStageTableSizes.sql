@@ -1,13 +1,14 @@
-IF NOT EXISTS (SELECT name FROM sys.tables WHERE name = 'Sizes')
-	CREATE TABLE [dbo].[Currencies]
-	(
-		[SizeID] [int],
-		[SizeName] [varchar](50),
-		[FriendlyName] [varchar](50),
-		[RetailInvisible] [bit],
-		[MinimumSizeAvailable] [int],
-		[MaximumSizeAvailable] [int],
-		[LoadDate] Datetime
-	)
-ELSE 
-	TRUNCATE TABLE Currencies
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'StgSizes')
+BEGIN
+    CREATE TABLE dbo.StgSizes
+    (
+        SizeID INT NOT NULL,
+        SizeName VARCHAR(50),
+        FriendlyName VARCHAR(50),
+        RetailInvisible BIT,
+        MinimumSizeAvailable INT,
+        MaximumSizeAvailable INT,
+        LoadDate DATETIME NOT NULL,
+        BatchID INT NOT NULL
+    );
+END;

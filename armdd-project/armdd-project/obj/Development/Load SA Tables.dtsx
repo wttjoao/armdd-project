@@ -1,0 +1,2104 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/14/2025 5:45:50 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-UI87G62"
+  DTS:CreatorName="DESKTOP-UI87G62\João Alves"
+  DTS:DTSID="{1AEB4134-BB19-43DB-A6AC-955AA5773DB6}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="2070"
+  DTS:ObjectName="Load SA Tables"
+  DTS:PackageType="5"
+  DTS:VersionBuild="26"
+  DTS:VersionGUID="{A4CD81BA-9DD9-4F79-97A8-C8DA26ADE41C}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[(local).PlusOrders]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{0B996336-498D-4D5D-9529-BE9F7C2A40E8}"
+      DTS:ObjectName="(local).PlusOrders">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=(local);Initial Catalog=PlusOrders;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Main-{0B996336-498D-4D5D-9529-BE9F7C2A40E8}(local).PlusOrders;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[(local).PlusOrder_StagingArea]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{97F64FF1-837B-46DF-9140-CC4D534737AE}"
+      DTS:ObjectName="(local).PlusOrder_StagingArea">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=(local);Initial Catalog=PlusOrder_StagingArea;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Main-{97F64FF1-837B-46DF-9140-CC4D534737AE}(local).PlusOrder_StagingArea;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DEFABB25-FB62-4260-B597-9ABDF051C25A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="BatchID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Clean StgBoxes"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0300A7C3-CAAD-45D9-A0CE-2425865F899F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clean StgBoxes"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{97F64FF1-837B-46DF-9140-CC4D534737AE}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.StgBoxes;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Clean StgProducts"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C6816F0B-C37C-466D-8FF7-078AC06BB8BB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clean StgProducts"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{97F64FF1-837B-46DF-9140-CC4D534737AE}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.StgProducts;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load to StgBoxes"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{1476061B-135B-41F3-98E3-C9AE7B0E8FDF}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="1033"
+      DTS:ObjectName="Load to StgBoxes"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load to StgBoxes\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              localeId="1033"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load to StgBoxes\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Inputs[Data Conversion Input].Columns[BoxHeight]"
+                      cachedDataType="r8"
+                      cachedName="BoxHeight"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxHeight]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Inputs[Data Conversion Input].Columns[BoxLength]"
+                      cachedDataType="r8"
+                      cachedName="BoxLength"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxLength]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Inputs[Data Conversion Input].Columns[BoxWidth]"
+                      cachedDataType="r8"
+                      cachedName="BoxWidth"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxWidth]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Inputs[Data Conversion Input].Columns[BoxVolWeight]"
+                      cachedDataType="r8"
+                      cachedName="BoxVolWeight"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxVolWeight]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Inputs[Data Conversion Input].Columns[BoxName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="BoxName"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxName]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Inputs[Data Conversion Input].Columns[BoxID]"
+                      cachedDataType="i4"
+                      cachedName="BoxID"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxID]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Inputs[Data Conversion Input].Columns[Location]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Location"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[Location]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Load to StgBoxes\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxHeight]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxHeight]"
+                      name="BoxHeight"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxHeight]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxLength]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxLength]"
+                      name="BoxLength"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxLength]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxWidth]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxWidth]"
+                      name="BoxWidth"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxWidth]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxVolWeight]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxVolWeight]"
+                      name="BoxVolWeight"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxVolWeight]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="100"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxName]"
+                      name="BoxName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxName]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxID]"
+                      name="BoxID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[Location]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="200"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[Location]"
+                      name="Location"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[Location]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Load to StgBoxes\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to StgBoxes\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              localeId="1033"
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load to StgBoxes\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\Derived Column.Inputs[Derived Column Input].Columns[BoxName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="BoxName"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxName]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[FINDSTRING](#{Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxName]},"(",1) &gt; 0 ? [TRIM]([SUBSTRING](#{Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxName]},1,[FINDSTRING](#{Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxName]},"(",1) - 1)) : #{Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxName]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">FINDSTRING([Data Conversion].BoxName,"(",1) &gt; 0 ? TRIM(SUBSTRING([Data Conversion].BoxName,1,FINDSTRING([Data Conversion].BoxName,"(",1) - 1)) : [Data Conversion].BoxName</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Load to StgBoxes\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Output].Columns[BatchID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Output].Columns[BatchID]"
+                      name="BatchID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::BatchID]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::BatchID]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Load to StgBoxes\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to StgBoxes\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[StgBoxes]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load to StgBoxes\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[(local).PlusOrder_StagingArea]"
+                  connectionManagerRefId="Package.ConnectionManagers[(local).PlusOrder_StagingArea]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BatchID]"
+                      cachedDataType="i4"
+                      cachedName="BatchID"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BatchID]"
+                      lineageId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Output].Columns[BatchID]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LoadDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="LoadDate"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LoadDate]"
+                      lineageId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Output].Columns[LoadDate]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BoxVolWeight]"
+                      cachedDataType="numeric"
+                      cachedName="BoxVolWeight"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxVolWeight]"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxVolWeight]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BoxWidth]"
+                      cachedDataType="numeric"
+                      cachedName="BoxWidth"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxWidth]"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxWidth]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BoxLength]"
+                      cachedDataType="numeric"
+                      cachedName="BoxLength"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxLength]"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxLength]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BoxHeight]"
+                      cachedDataType="numeric"
+                      cachedName="BoxHeight"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxHeight]"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxHeight]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Location]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="200"
+                      cachedName="Location"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Location]"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[Location]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BoxName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="BoxName"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxName]"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxName]" />
+                    <inputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BoxID]"
+                      cachedDataType="i4"
+                      cachedName="BoxID"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxID]"
+                      lineageId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output].Columns[BoxID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxID]"
+                      dataType="i4"
+                      name="BoxID" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="BoxName" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxHeight]"
+                      dataType="numeric"
+                      name="BoxHeight"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxLength]"
+                      dataType="numeric"
+                      name="BoxLength"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxWidth]"
+                      dataType="numeric"
+                      name="BoxWidth"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxVolWeight]"
+                      dataType="numeric"
+                      name="BoxVolWeight"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      name="Location" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      name="LoadDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BatchID]"
+                      dataType="i4"
+                      name="BatchID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to StgBoxes\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgBoxes\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgBoxes\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to StgBoxes\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              localeId="1033"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Boxes]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load to StgBoxes\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[(local).PlusOrders]"
+                  connectionManagerRefId="Package.ConnectionManagers[(local).PlusOrders]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxID]"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxID]"
+                      name="BoxID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxName]"
+                      length="255"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxName]"
+                      name="BoxName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxHeight]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxHeight]"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxHeight]"
+                      name="BoxHeight"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxLength]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxLength]"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxLength]"
+                      name="BoxLength"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxWidth]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxWidth]"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxWidth]"
+                      name="BoxWidth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxVolWeight]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxVolWeight]"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxVolWeight]"
+                      name="BoxVolWeight"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[Location]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Location]"
+                      length="255"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].Columns[Location]"
+                      name="Location"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxID]"
+                      dataType="i4"
+                      name="BoxID" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxName]"
+                      dataType="wstr"
+                      length="255"
+                      name="BoxName" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxHeight]"
+                      dataType="r8"
+                      name="BoxHeight" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxLength]"
+                      dataType="r8"
+                      name="BoxLength" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxWidth]"
+                      dataType="r8"
+                      name="BoxWidth" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxVolWeight]"
+                      dataType="r8"
+                      name="BoxVolWeight" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Location]"
+                      dataType="wstr"
+                      length="255"
+                      name="Location" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CreateDate]"
+                      dataType="dbDate"
+                      name="CreateDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastUpdateDate]"
+                      dataType="dbDate"
+                      name="LastUpdateDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxID]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxID]"
+                      name="BoxID" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxName]"
+                      name="BoxName" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxHeight]"
+                      dataType="r8"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxHeight]"
+                      name="BoxHeight" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxLength]"
+                      dataType="r8"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxLength]"
+                      name="BoxLength" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxWidth]"
+                      dataType="r8"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxWidth]"
+                      name="BoxWidth" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxVolWeight]"
+                      dataType="r8"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxVolWeight]"
+                      name="BoxVolWeight" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Location]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Location]"
+                      name="Location" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load to StgBoxes.Paths[Data Conversion Output]"
+              endId="Package\Load to StgBoxes\Derived Column.Inputs[Derived Column Input]"
+              name="Data Conversion Output"
+              startId="Package\Load to StgBoxes\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Load to StgBoxes.Paths[Derived Column Output]"
+              endId="Package\Load to StgBoxes\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Load to StgBoxes\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load to StgBoxes.Paths[OLE DB Source Output]"
+              endId="Package\Load to StgBoxes\Data Conversion.Inputs[Data Conversion Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load to StgBoxes\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load to StgCountries"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{23311374-630B-46BB-AD21-95EED9ADEA16}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load to StgCountries"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load to StgCurrencies"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{8782F607-87D7-4110-BC4A-4F143CC9248D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load to StgCurrencies"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load to StgCustomers"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{24632363-5242-45F7-AA26-08A1744A7967}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load to StgCustomers"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load to StgOrderLines"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{C1BDAF62-FD71-4DCD-B7E6-82FF8A657BD9}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load to StgOrderLines"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load to StgOrders"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{17910AB5-FFB7-432F-9CEC-12D358ADED3E}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load to StgOrders"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load to StgProducts"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{5E01F2CB-BB44-4C56-AF67-AC3F2FE6D920}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load to StgProducts"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load to StgProducts\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load to StgProducts\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to StgProducts\Data Conversion.Inputs[Data Conversion Input].Columns[Description]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Description"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[Description]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to StgProducts\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Load to StgProducts\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgProducts\Data Conversion.Outputs[Data Conversion Output].Columns[Description]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="500"
+                      lineageId="Package\Load to StgProducts\Data Conversion.Outputs[Data Conversion Output].Columns[Description]"
+                      name="Description"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[Description]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to StgProducts\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Load to StgProducts\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgProducts\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgProducts\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgProducts\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to StgProducts\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load to StgProducts\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to StgProducts\Derived Column.Inputs[Derived Column Input].Columns[Description]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Description"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[Description]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LOWER](#{Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[Description]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LOWER(Description)</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Load to StgProducts\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Output].Columns[BatchID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Output].Columns[BatchID]"
+                      name="BatchID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::BatchID]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::BatchID]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Load to StgProducts\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to StgProducts\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[StgProducts]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load to StgProducts\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[(local).PlusOrder_StagingArea]"
+                  connectionManagerRefId="Package.ConnectionManagers[(local).PlusOrder_StagingArea]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]" />
+                    <inputColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BoxID]"
+                      cachedDataType="i4"
+                      cachedName="BoxID"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxID]"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxID]" />
+                    <inputColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AvailablePortal]"
+                      cachedDataType="bool"
+                      cachedName="AvailablePortal"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AvailablePortal]"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[AvailablePortal]" />
+                    <inputColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CategoryID]"
+                      cachedDataType="i4"
+                      cachedName="CategoryID"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CategoryID]"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[CategoryID]" />
+                    <inputColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BatchID]"
+                      cachedDataType="i4"
+                      cachedName="BatchID"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BatchID]"
+                      lineageId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Output].Columns[BatchID]" />
+                    <inputColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LoadDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="LoadDate"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LoadDate]"
+                      lineageId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Output].Columns[LoadDate]" />
+                    <inputColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Description]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="500"
+                      cachedName="Description"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Description]"
+                      lineageId="Package\Load to StgProducts\Data Conversion.Outputs[Data Conversion Output].Columns[Description]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                      dataType="i4"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CategoryID]"
+                      dataType="i4"
+                      name="CategoryID" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BoxID]"
+                      dataType="i4"
+                      name="BoxID" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AvailablePortal]"
+                      dataType="bool"
+                      name="AvailablePortal" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ActiveFlag]"
+                      dataType="bool"
+                      name="ActiveFlag" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      name="LoadDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BatchID]"
+                      dataType="i4"
+                      name="BatchID" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsValid]"
+                      dataType="bool"
+                      name="IsValid" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RejectionReason]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      name="RejectionReason" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load to StgProducts\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgProducts\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgProducts\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load to StgProducts\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Products]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load to StgProducts\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[(local).PlusOrders]"
+                  connectionManagerRefId="Package.ConnectionManagers[(local).PlusOrders]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      name="ProductID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxID]"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[BoxID]"
+                      name="BoxID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[AvailablePortal]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AvailablePortal]"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[AvailablePortal]"
+                      name="AvailablePortal"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Description]"
+                      length="255"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[Description]"
+                      name="Description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[CategoryID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CategoryID]"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].Columns[CategoryID]"
+                      name="CategoryID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      dataType="i4"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CategoryID]"
+                      dataType="i4"
+                      name="CategoryID" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BoxID]"
+                      dataType="i4"
+                      name="BoxID" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AvailablePortal]"
+                      dataType="bool"
+                      name="AvailablePortal" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Active]"
+                      dataType="bool"
+                      name="Active" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CreateDate]"
+                      dataType="dbDate"
+                      name="CreateDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastUpdateDate]"
+                      dataType="dbDate"
+                      name="LastUpdateDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      name="ProductID" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxID]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[BoxID]"
+                      name="BoxID" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AvailablePortal]"
+                      dataType="bool"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AvailablePortal]"
+                      name="AvailablePortal" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Description]"
+                      name="Description" />
+                    <outputColumn
+                      refId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CategoryID]"
+                      dataType="i4"
+                      lineageId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CategoryID]"
+                      name="CategoryID" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load to StgProducts.Paths[Data Conversion Output]"
+              endId="Package\Load to StgProducts\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Load to StgProducts\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Load to StgProducts.Paths[Derived Column Output]"
+              endId="Package\Load to StgProducts\Data Conversion.Inputs[Data Conversion Input]"
+              name="Derived Column Output"
+              startId="Package\Load to StgProducts\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load to StgProducts.Paths[OLE DB Source Output]"
+              endId="Package\Load to StgProducts\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load to StgProducts\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load to StgShipToLocation"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{AEF29374-18E5-4168-9C7E-D4EA7DECA551}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load to StgShipToLocation"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load to StgSites"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{935B4F88-E1E7-4E23-ABDF-4D7E5E94F63F}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load to StgSites"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load to StgSizes"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{96C67CEE-E5E8-4AF2-83F1-08382F8C94D9}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load to StgSizes"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{2B24AEE0-1DFE-4EB7-9F5D-B8F7F2849FB5}"
+      DTS:From="Package\Clean StgProducts"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load to StgProducts" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{929B7C68-5080-4C5E-8303-599B005A45EF}"
+      DTS:From="Package\Clean StgBoxes"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load to StgBoxes" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="152,42.6666666666667"
+          Id="Package\Clean StgBoxes"
+          TopLeft="48.124997848645,29.2499986052511" />
+        <NodeLayout
+          Size="178.666666666667,42.6666666666667"
+          Id="Package\Load to StgCountries"
+          TopLeft="70.4999970942735,387.699981775285" />
+        <NodeLayout
+          Size="161.333333333334,42.6666666666667"
+          Id="Package\Load to StgBoxes"
+          TopLeft="43.7499980442213,122.199994173051" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="124.270831279766,71.9166652719178">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.2833289011328"
+              Start="0,0"
+              End="0,42.7833289011328">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.7833289011328" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="182.666666666667,42.6666666666667"
+          Id="Package\Load to StgCurrencies"
+          TopLeft="642.37497152947,448.149978892804" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\Load to StgCustomers"
+          TopLeft="637.374973094092,386.499983263016" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\Load to StgOrderLines"
+          TopLeft="442.999983124435,386.599984688759" />
+        <NodeLayout
+          Size="165.333333333334,42.6666666666667"
+          Id="Package\Load to StgOrders"
+          TopLeft="261.749992568046,387.999986052513" />
+        <NodeLayout
+          Size="174.666666666667,42.6666666666667"
+          Id="Package\Load to StgProducts"
+          TopLeft="232.999995194376,124.200000061989" />
+        <NodeLayout
+          Size="205.333333333334,42.6666666666667"
+          Id="Package\Load to StgShipToLocation"
+          TopLeft="69.8750038277358,444.749986207486" />
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\Load to StgSites"
+          TopLeft="471.124987231568,448.749987447262" />
+        <NodeLayout
+          Size="157.333333333334,42.6666666666667"
+          Id="Package\Load to StgSizes"
+          TopLeft="301.124996172264,448.199988904" />
+        <NodeLayout
+          Size="165.333333333334,42.6666666666667"
+          Id="Package\Clean StgProducts"
+          TopLeft="235.624989466742,27.2999986982346" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="319.312492330559,69.9666653649013">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.2333346970876"
+              Start="0,0"
+              End="0,46.7333346970876">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.7333346970876" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load to StgBoxes">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\Load to StgBoxes\OLE DB Destination"
+          TopLeft="325.624985443428,315.249984967709" />
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\Load to StgBoxes\OLE DB Source"
+          TopLeft="103.749995362014,51.9999975204469" />
+        <NodeLayout
+          Size="157.333333333334,42.6666666666667"
+          Id="Package\Load to StgBoxes\Data Conversion"
+          TopLeft="176.874992093071,142.999993181229" />
+        <NodeLayout
+          Size="154.666666666667,42.6666666666667"
+          Id="Package\Load to StgBoxes\Derived Column"
+          TopLeft="256.874988516793,227.499989151954" />
+        <EdgeLayout
+          Id="Package\Load to StgBoxes.Paths[OLE DB Source Output]"
+          TopLeft="179.083328695347,94.6666641871136">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="76.4583300643905,48.3333289941152"
+              Start="0,0"
+              End="76.4583300643905,40.8333289941152">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.1666644970576" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.1666644970576"
+                    Point2="0,24.1666644970576"
+                    Point3="4,24.1666644970576" />
+                  <mssgle:LineSegment
+                    End="72.4583300643905,24.1666644970576" />
+                  <mssgle:CubicBezierSegment
+                    Point1="72.4583300643905,24.1666644970576"
+                    Point2="76.4583300643905,24.1666644970576"
+                    Point3="76.4583300643905,28.1666644970576" />
+                  <mssgle:LineSegment
+                    End="76.4583300643905,40.8333289941152" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to StgBoxes.Paths[Derived Column Output]"
+          TopLeft="334.208321850126,270.166655818621">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="77.4166635933017,45.0833291490883"
+              Start="0,0"
+              End="77.4166635933017,37.5833291490883">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5416645745442" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.5416645745442"
+                    Point2="0,22.5416645745442"
+                    Point3="4,22.5416645745442" />
+                  <mssgle:LineSegment
+                    End="73.4166635933017,22.5416645745442" />
+                  <mssgle:CubicBezierSegment
+                    Point1="73.4166635933017,22.5416645745442"
+                    Point2="77.4166635933017,22.5416645745442"
+                    Point3="77.4166635933017,26.5416645745442" />
+                  <mssgle:LineSegment
+                    End="77.4166635933017,37.5833291490883" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to StgBoxes.Paths[Data Conversion Output]"
+          TopLeft="255.541658759738,185.666659847895">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="78.6666630903887,41.833329304059"
+              Start="0,0"
+              End="78.6666630903887,34.333329304059">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.9166646520295" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.9166646520295"
+                    Point2="0,20.9166646520295"
+                    Point3="4,20.9166646520295" />
+                  <mssgle:LineSegment
+                    End="74.6666630903887,20.9166646520295" />
+                  <mssgle:CubicBezierSegment
+                    Point1="74.6666630903887,20.9166646520295"
+                    Point2="78.6666630903887,20.9166646520295"
+                    Point3="78.6666630903887,24.9166646520295" />
+                  <mssgle:LineSegment
+                    End="78.6666630903887,34.333329304059" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load to StgBoxes\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load to StgBoxes\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Load to StgProducts">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\Load to StgProducts\OLE DB Source"
+          TopLeft="93.7999972045423,30.6999990850687" />
+        <NodeLayout
+          Size="154.666666666667,42.6666666666667"
+          Id="Package\Load to StgProducts\Derived Column"
+          TopLeft="227.499993219972,128.999996155501" />
+        <EdgeLayout
+          Id="Package\Load to StgProducts.Paths[OLE DB Source Output]"
+          TopLeft="169.133330537876,73.3666657517353">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="135.69999601543,55.6333304037652"
+              Start="0,0"
+              End="135.69999601543,48.1333304037652">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.8166652018826" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.8166652018826"
+                    Point2="0,27.8166652018826"
+                    Point3="4,27.8166652018826" />
+                  <mssgle:LineSegment
+                    End="131.69999601543,27.8166652018826" />
+                  <mssgle:CubicBezierSegment
+                    Point1="131.69999601543,27.8166652018826"
+                    Point2="135.69999601543,27.8166652018826"
+                    Point3="135.69999601543,31.8166652018826" />
+                  <mssgle:LineSegment
+                    End="135.69999601543,48.1333304037652" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\Load to StgProducts\OLE DB Destination"
+          TopLeft="462.499986216426,308.499990805984" />
+        <NodeLayout
+          Size="157.333333333334,42.6666666666667"
+          Id="Package\Load to StgProducts\Data Conversion"
+          TopLeft="354.999989420176,212.499993667007" />
+        <EdgeLayout
+          Id="Package\Load to StgProducts.Paths[Derived Column Output]"
+          TopLeft="304.833326553305,171.666662822167">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="128.833329533537,40.8333308448395"
+              Start="0,0"
+              End="128.833329533537,33.3333308448395">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.4166654224197" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.4166654224197"
+                    Point2="0,20.4166654224197"
+                    Point3="4,20.4166654224197" />
+                  <mssgle:LineSegment
+                    End="124.833329533537,20.4166654224197" />
+                  <mssgle:CubicBezierSegment
+                    Point1="124.833329533537,20.4166654224197"
+                    Point2="128.833329533537,20.4166654224197"
+                    Point3="128.833329533537,24.4166654224197" />
+                  <mssgle:LineSegment
+                    End="128.833329533537,33.3333308448395" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load to StgProducts.Paths[Data Conversion Output]"
+          TopLeft="433.666656086843,255.166660333673">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="114.833330129584,53.3333304723104"
+              Start="0,0"
+              End="114.833330129584,45.8333304723104">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.6666652361552" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.6666652361552"
+                    Point2="0,26.6666652361552"
+                    Point3="4,26.6666652361552" />
+                  <mssgle:LineSegment
+                    End="110.833330129584,26.6666652361552" />
+                  <mssgle:CubicBezierSegment
+                    Point1="110.833330129584,26.6666652361552"
+                    Point2="114.833330129584,26.6666652361552"
+                    Point3="114.833330129584,30.6666652361552" />
+                  <mssgle:LineSegment
+                    End="114.833330129584,45.8333304723104" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load to StgProducts\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load to StgProducts\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

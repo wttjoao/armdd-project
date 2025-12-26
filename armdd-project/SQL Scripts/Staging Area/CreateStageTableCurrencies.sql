@@ -1,12 +1,13 @@
-IF NOT EXISTS (SELECT name FROM sys.tables WHERE name = 'Currencies')
-	CREATE TABLE [dbo].[Currencies]
-	(
-		[CurrencyID] [int],
-		[CurrencySymbol] [varchar](10),
-		[CurrencyName] [varchar](50),
-		[ConversionRateToEur] [decimal](18,6),
-		[isStandardCurrency] [bit],
-		[LoadDate] Datetime
-	)
-ELSE 
-	TRUNCATE TABLE Currencies
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'StgCurrencies')
+BEGIN
+    CREATE TABLE dbo.StgCurrencies
+    (
+        CurrencyID INT NOT NULL,
+        CurrencySymbol VARCHAR(10),
+        CurrencyName VARCHAR(50),
+        ConversionRateToEUR DECIMAL(18,6),
+        IsStandardCurrency BIT,
+        LoadDate DATETIME NOT NULL,
+        BatchID INT NOT NULL
+    );
+END;

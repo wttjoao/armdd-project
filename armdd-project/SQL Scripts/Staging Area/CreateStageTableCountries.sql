@@ -1,10 +1,12 @@
-IF NOT EXISTS (SELECT name FROM sys.tables WHERE name = 'Countries')
-	CREATE TABLE [dbo].[Countries]
-	(
-		[CountryID] [int],
-		[CountryName] [varchar](50),
-		[CountryVAT] [decimal](5,2),
-		[EuroZone] [bit]
-	)
-ELSE 
-	TRUNCATE TABLE Countries
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'StgCountries')
+BEGIN
+    CREATE TABLE dbo.StgCountries
+    (
+        CountryID INT NOT NULL,
+        CountryName VARCHAR(100),
+        CountryVAT DECIMAL(5,2),
+        EuroZone BIT,
+        LoadDate DATETIME NOT NULL,
+        BatchID INT NOT NULL
+    );
+END;
